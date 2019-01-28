@@ -8,12 +8,11 @@ val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.1" % "provided"
 val playJsonDerivedCodecs = "org.julienrf" %% "play-json-derived-codecs" % "4.0.0"
 
 lazy val test2 = (project in file("."))
+    .settings(name := "bookstore")
     .aggregate(
         utils,
         bookWriteStoreApi,
         bookWriteStoreImpl,
-        bookReadStoreApi,
-        bookReadStoreImpl,
     )
 
 lazy val utils = (project in file("modules/utils"))
@@ -25,7 +24,7 @@ lazy val utils = (project in file("modules/utils"))
         )
     )
 
-lazy val bookReadStoreApi = (project in file("modules/bookreadstore-api"))
+/*lazy val bookReadStoreApi = (project in file("modules/bookreadstore-api"))
     .settings(
         version := "1.0-SNAPSHOT",
         libraryDependencies += lagomScaladslApi,
@@ -41,10 +40,11 @@ lazy val bookReadStoreImpl = (project in file("modules/bookreadstore-impl"))
         version := "1.0-SNAPSHOT",
         libraryDependencies ++= Seq(
             lagomScaladslPersistenceCassandra,
+            lagomScaladslKafkaBroker,
             macwire
         )
     )
-    .dependsOn(bookReadStoreApi)
+    .dependsOn(bookReadStoreApi)*/
 
 lazy val bookWriteStoreApi = (project in file("modules/bookwritestore-api"))
     .settings(
@@ -54,11 +54,13 @@ lazy val bookWriteStoreApi = (project in file("modules/bookwritestore-api"))
     .dependsOn(utils)
 
 lazy val bookWriteStoreImpl = (project in file("modules/bookwritestore-impl"))
-    .enablePlugins(LagomScala)
+    .enablePlugins(LagomScala, SbtReactiveAppPlugin)
     .settings(
         version := "1.0-SNAPSHOT",
         libraryDependencies ++= Seq(
             lagomScaladslPersistenceCassandra,
+            lagomScaladslKafkaBroker,
+            "com.datastax.cassandra" % "cassandra-driver-extras" % "3.0.0",
             macwire
         )
     )

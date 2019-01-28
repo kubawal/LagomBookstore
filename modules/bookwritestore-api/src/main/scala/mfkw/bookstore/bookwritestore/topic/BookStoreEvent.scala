@@ -1,9 +1,12 @@
 package mfkw.bookstore.bookwritestore.topic
 
+import julienrf.json.derived
 import mfkw.bookstore.bookwritestore.model.{Book, BookInstance}
-import mfkw.bookstore.utils.{Formattable, FormattableBase}
+import play.api.libs.json.{__, Format, Json}
 
-sealed trait BookStoreEvent {
+sealed trait BookStoreEvent
+
+object BookStoreEvent {
     case class BookCreated(book: Book) extends BookStoreEvent
     case class BookUpdated(book: Book) extends BookStoreEvent
     case class BookDeleted(book: Book) extends BookStoreEvent
@@ -12,12 +15,23 @@ sealed trait BookStoreEvent {
     case class BookInstanceUpdated(book: Book, instance: BookInstance) extends BookStoreEvent
     case class BookInstanceDeleted(book: Book, instance: BookInstance) extends BookStoreEvent
 
-    object BookCreated extends Formattable[BookCreated]
-    object BookUpdated extends Formattable[BookUpdated]
-    object BookDeleted extends Formattable[BookDeleted]
-    object BookInstanceAdded extends Formattable[BookInstanceAdded]
-    object BookInstanceUpdated extends Formattable[BookInstanceUpdated]
-    object BookInstanceDeleted extends Formattable[BookInstanceDeleted]
+    implicit val format: Format[BookStoreEvent] = derived.flat.oformat((__ \ "type").format[String])
+    object BookCreated {
+        implicit val format: Format[BookCreated] = Json.format
+    }
+    object BookUpdated {
+        implicit val format: Format[BookUpdated] = Json.format
+    }
+    object BookDeleted {
+        implicit val format: Format[BookDeleted] = Json.format
+    }
+    object BookInstanceAdded {
+        implicit val format: Format[BookInstanceAdded] = Json.format
+    }
+    object BookInstanceUpdated {
+        implicit val format: Format[BookInstanceUpdated] = Json.format
+    }
+    object BookInstanceDeleted {
+        implicit val format: Format[BookInstanceDeleted] = Json.format
+    }
 }
-
-object BookStoreEvent extends FormattableBase[BookStoreEvent]

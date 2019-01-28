@@ -3,11 +3,12 @@ package mfkw.bookstore.bookwritestore.service
 import com.lightbend.lagom.scaladsl.api.transport.Method
 import com.lightbend.lagom.scaladsl.api.{Descriptor, Service}
 import mfkw.bookstore.bookwritestore.dao.BookWriteDao
-import mfkw.bookstore.bookwritestore.topic.BookStoreEventsTopic
+import mfkw.bookstore.bookwritestore.topic.BookStoreEventTopic
 
 trait BookWriteStoreService extends Service
-    with BookWriteDao with BookStoreEventsTopic {
-    override def descriptor: Descriptor = {
+    with BookWriteDao with BookStoreEventTopic {
+
+    override final def descriptor: Descriptor = {
         import Service._
 
         named("bookwritestore").withCalls(

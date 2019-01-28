@@ -1,6 +1,9 @@
 package mfkw.bookstore.bookwritestore.command
 
-import mfkw.bookstore.utils.Formattable
+import play.api.libs.json.{Format, Json}
 
 case class BookInstanceData(isPresent: Option[Boolean] = None)
-object BookInstanceData extends Formattable[BookInstanceData]
+
+object BookInstanceData {
+    implicit val format: Format[BookInstanceData] = Json.format
+}

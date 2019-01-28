@@ -1,7 +1,6 @@
 package mfkw.bookstore.bookwritestore.persistence
 
-import mfkw.bookstore.bookreadstore.model.{Book, BookInstance}
-import mfkw.bookstore.bookwritestore.model.BookInstance
+import mfkw.bookstore.bookwritestore.model.{Book, BookInstance}
 import play.api.libs.json.{Format, Json}
 
 case class BookState(book: Book, instances: Seq[BookInstance])

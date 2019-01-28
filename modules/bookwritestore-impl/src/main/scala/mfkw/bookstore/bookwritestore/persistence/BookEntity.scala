@@ -1,6 +1,6 @@
 package mfkw.bookstore.bookwritestore.persistence
 
-import com.lightbend.lagom.scaladsl.persistence.PersistentEntity
+/*import com.lightbend.lagom.scaladsl.persistence.PersistentEntity
 
 class BookEntity extends PersistentEntity{
     override type Command = BookCommand
@@ -10,4 +10,4 @@ class BookEntity extends PersistentEntity{
     override def initialState: BookState = BookState.notInitialized
 
     override def behavior: Behavior = Actions()
-}
+}*/
